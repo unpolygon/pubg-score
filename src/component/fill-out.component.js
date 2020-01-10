@@ -1,24 +1,8 @@
 import React from 'react';
 import { db } from '../firebase';
+import './fill-out.component.css';
 
 export default function fillOut(){
-    // const renderData = () => {
-    //     let doc = {id:'parn', name: 'Hello', city: 'world'};
-    //     const fillOutList = document.querySelector('#fillOut');
-
-    //     let li = document.createElement('li');
-    //     let name = document.createElement('span');
-    //     let city = document.createElement('span');
-    
-    //     li.setAttribute('data-id', doc.id);
-    //     name.textContent = doc.name;
-    //     city.textContent = doc.city;
-    
-    //     li.appendChild(name);
-    //     li.appendChild(city);
-    //     console.log(fillOutList)
-    //     if (fillOutList !== null) fillOutList.appendChild(li);
-    // }
 
     const uploadDataPubg = e => {
         e.preventDefault();

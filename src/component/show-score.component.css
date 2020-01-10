@@ -8,8 +8,9 @@ ul{
 ul li{
     margin: 0;
     padding: 10px;
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
     padding: 10px;
     align-items: center;
 }
@@ -21,13 +22,11 @@ ul li:nth-child(2n){
 ul li div{
     display: flex;
     flex-direction: column;
-   justify-content: center;
-   align-items: center;
+    justify-content: center;
+    align-items: center
 }
 
 .head{
-    display: flex;
-    justify-content: space-around;
     background-color: gray;
 }
 

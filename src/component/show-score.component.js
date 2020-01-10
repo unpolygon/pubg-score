@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { db } from '../firebase';
 import './show-score.component.css';
 
-export default function showScore(){
+const ShowScore = () => {
     var counter = 0;
+    
+    useEffect(() => {
+        getData();
+    });
 
-    const renderData = () => {
+    const getData = () => {
+        db.collection('TeamName').get().then(docs => {
+            docs.forEach(doc => {
+                // console.log(doc);
+                renderData(doc);
+            });
+        });
+    }
+
+    const renderData = (doc) => {
         counter++;
-        let doc = {
-            id: 'iaun',
-            firstName: 'Parn',
-            secondName: 'Milly', 
-            firstKill: 0, 
-            secondKill: 0 , 
-            score: 0
-        };
         const teamList = document.querySelector('#team');
 
         let li = document.createElement('li');
@@ -39,11 +45,11 @@ export default function showScore(){
         li.setAttribute('data-id', doc.id);
         rank.textContent=counter;
         teamName.textContent=doc.id;
-        firstName.textContent=doc.firstName;
-        secondName.textContent=doc.secondName;
-        firstKill.textContent=doc.firstKill;
-        secondKill.textContent=doc.secondKill;
-        score.textContent=doc.score;
+        firstName.textContent=doc.data().firstName;
+        secondName.textContent=doc.data().secondName;
+        firstKill.textContent=doc.data().firstKill;
+        secondKill.textContent=doc.data().secondKill;
+        score.textContent=doc.data().score;
         
         name.appendChild(firstName);
         name.appendChild(secondName);
@@ -61,7 +67,7 @@ export default function showScore(){
     }
     return(
         <div className='showScore'>
-            <button onClick ={renderData}>Show</button>
+            <button>Show</button>
             <ul id ='team'>
                 <li className='head'>
                     <span>Rank</span>
@@ -74,3 +80,5 @@ export default function showScore(){
         </div>
     );
 }
+
+export default ShowScore;
