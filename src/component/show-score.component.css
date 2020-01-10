@@ -1,0 +1,36 @@
+ul{
+    margin: 20px;
+    padding: 0;
+    list-style-type: none;
+    background-color: rgb(216, 216, 216);
+}
+
+ul li{
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    align-items: center;
+}
+
+ul li:nth-child(2n){
+    background-color: white;
+}
+
+ul li div{
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.head{
+    display: flex;
+    justify-content: space-around;
+    background-color: gray;
+}
+
+.head span{
+    padding: 10px;
+}
