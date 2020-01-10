@@ -1,4 +1,5 @@
 import React from 'react';
+import { db } from '../firebase';
 
 export default function fillOut(){
     const renderData = () => {
