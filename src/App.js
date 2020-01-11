@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import FillOut from './component/fill-out.component';
@@ -12,9 +12,11 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
-        <Route path="/" exact component={FillOut} />
-        <Route path="/Edit" component={ShowScore} />
-        <Route path="/Create" component={CreateTeam} />
+        <Switch>
+          <Route path="/" exact component={FillOut} />
+          <Route path="/Edit" component={ShowScore} />
+          <Route path="/Create" component={CreateTeam} />
+        </Switch>
       </div>
     </Router>
   );
