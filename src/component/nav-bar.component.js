@@ -7,6 +7,7 @@ export default function navBar(){
         <div className='navBar'>
             <Link to="/" className="navBar-Link">Fill Out</Link>
             <Link to="/Edit" className="navBar-Link">Show Score</Link>
+            <Link to="/Create" className="navBar-Link">Create</Link>
         </div>
     );
 }
