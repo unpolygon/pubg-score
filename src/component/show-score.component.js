@@ -12,7 +12,6 @@ const ShowScore = () => {
     const getData = () => {
         db.collection('TeamName').get().then(docs => {
             docs.forEach(doc => {
-                // console.log(doc);
                 renderData(doc);
             });
         });

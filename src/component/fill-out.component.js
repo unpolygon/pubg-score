@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { db } from '../firebase';
 import './fill-out.component.css';
+import {calculate} from '../algorithm/calculate';
 
 export default function FillOut(){
     const [playerList, setPlayerList] = useState([]);
@@ -11,7 +12,8 @@ export default function FillOut(){
             docs.forEach(doc => {
                 let _ = doc.data();
                 let firstAndSecondName = [_.firstName,_.secondName];
-                setPlayerList(playerList.concat(firstAndSecondName));
+                setPlayerList(playerList => [...playerList,_.firstName]);
+                setPlayerList(playerList => [...playerList,_.secondName]);
             })
         });
     },[]);
@@ -25,16 +27,19 @@ export default function FillOut(){
         let secondKill = 0;
 
         if (playerName == doc.data().firstName){
-            firstKill = playerKill;
-            secondKill = restPlayerKill;
+            firstKill = parseInt(playerKill);
+            secondKill = parseInt(restPlayerKill);
         }else{
-            secondKill = playerKill;
-            firstKill = restPlayerKill;
+            secondKill = parseInt(playerKill);
+            firstKill = parseInt(restPlayerKill);
         }
+
+        let score = calculate(rankCounter,firstKill+secondKill,doc.data().score);
        
         db.collection('TeamName').doc(doc.id).update({
             firstKill: firstKill,
-            secondKill : secondKill
+            secondKill : secondKill,
+            score:score
         })
 
         let numberOfTeam = 9;
