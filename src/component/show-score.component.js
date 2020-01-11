@@ -10,7 +10,7 @@ const ShowScore = () => {
     });
 
     const getData = () => {
-        db.collection('TeamName').get().then(docs => {
+        db.collection('TeamName').orderBy('score','desc').get().then(docs => {
             docs.forEach(doc => {
                 renderData(doc);
             });

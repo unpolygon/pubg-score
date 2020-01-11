@@ -28,9 +28,9 @@ export default function FillOut(){
 
         if (playerName == doc.data().firstName){
             firstKill = parseInt(playerKill);
-            secondKill = parseInt(restPlayerKill);
+            if(doc.data().secondName !== '') secondKill = parseInt(restPlayerKill);
         }else{
-            secondKill = parseInt(playerKill);
+            if(doc.data().secondName !== '') secondKill = parseInt(playerKill);
             firstKill = parseInt(restPlayerKill);
         }
 
