@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Route, Switch , HashRouter} from 'react-router-dom';
 import './App.css';
 
 import FillOut from './component/fill-out.component';
@@ -9,7 +9,7 @@ import NavBar from './component/nav-bar.component';
 
 function App() {
   return (
-    <Router basename='/'>
+    <HashRouter basename='/'>
       <div className="App">
         <NavBar />
         <Switch>
@@ -18,7 +18,7 @@ function App() {
           <Route path="/Create" component={CreateTeam} />
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 
