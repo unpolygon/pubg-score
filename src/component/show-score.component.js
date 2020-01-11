@@ -10,9 +10,18 @@ const ShowScore = () => {
     });
 
     const getData = () => {
-        db.collection('TeamName').orderBy('score','desc').get().then(docs => {
-            docs.forEach(doc => {
-                renderData(doc);
+        // db.collection('TeamName').orderBy('score','desc').get().then(docs => {
+        //     docs.forEach(doc => {
+        //         renderData(doc);
+        //     });
+        // });
+        db.collection('TeamName').orderBy('score','desc').onSnapshot(snapshot => {
+            let changes = snapshot.docChanges();
+            changes.forEach(change => {
+                console.log(change.doc.data(),change.type);
+                if(change.type=='added' || change.type=='modified'){
+                    renderData(change.doc)
+                }
             });
         });
     }

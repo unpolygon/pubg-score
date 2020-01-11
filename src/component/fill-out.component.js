@@ -37,8 +37,8 @@ export default function FillOut(){
         let score = calculate(rankCounter,firstKill+secondKill,doc.data().score);
        
         db.collection('TeamName').doc(doc.id).update({
-            firstKill: firstKill,
-            secondKill : secondKill,
+            firstKill: firstKill+doc.data().firstKill,
+            secondKill : secondKill+doc.data().secondKill,
             score:score
         })
 
