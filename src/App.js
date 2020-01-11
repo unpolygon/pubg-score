@@ -9,7 +9,7 @@ import NavBar from './component/nav-bar.component';
 
 function App() {
   return (
-    <Router>
+    <Router basename='/'>
       <div className="App">
         <NavBar />
         <Switch>
