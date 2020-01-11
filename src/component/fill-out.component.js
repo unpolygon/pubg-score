@@ -1,62 +1,59 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { db } from '../firebase';
 import './fill-out.component.css';
 
-export default function fillOut(){
+export default function FillOut(){
+    const [playerList, setPlayerList] = useState([]);
+    const [rankCounter, setRankCounter] = useState(1);
+
+    useEffect(() => {
+        db.collection('TeamName').get().then(docs => {
+            docs.forEach(doc => {
+                let _ = doc.data();
+                let firstAndSecondName = [_.firstName,_.secondName];
+                setPlayerList(playerList.concat(firstAndSecondName));
+            })
+        });
+    },[]);
+
+    const postData = (doc) => {
+        var DataRegUser = document.querySelector('#pushData');
+        var playerName = DataRegUser.playerName.value;
+        var playerKill = DataRegUser.playerKill.value;
+        var restPlayerKill = DataRegUser.restPlayerKill.value;
+        let firstKill = 0;
+        let secondKill = 0;
+
+        if (playerName == doc.data().firstName){
+            firstKill = playerKill;
+            secondKill = restPlayerKill;
+        }else{
+            secondKill = playerKill;
+            firstKill = restPlayerKill;
+        }
+       
+        db.collection('TeamName').doc(doc.id).update({
+            firstKill: firstKill,
+            secondKill : secondKill
+        })
+
+        let numberOfTeam = 9;
+        setRankCounter(rankCounter%(numberOfTeam)+1);
+        DataRegUser.playerName.value = '';
+        DataRegUser.playerKill.value = '';
+        DataRegUser.restPlayerKill.value = '';
+    }
 
     const uploadDataPubg = e => {
         e.preventDefault();
-        let DataRegUser = document.querySelector('#pushData');
+        var DataRegUser = document.querySelector('#pushData');
+        var playerName = DataRegUser.playerName.value;
         db.collection('TeamName').get().then(docs => {
             docs.forEach(doc => {
-                    if(DataRegUser.first_Name.value === 'PERSiACaT'){
-                        db.collection('TeamName').doc('ALGO-HeroNoon').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
+                    if(playerName == doc.data().firstName || 
+                        playerName == doc.data().secondName){
+                            postData(doc);
                     }
-                    else if(DataRegUser.first_Name.value === 'Icetea'){
-                        db.collection('TeamName').doc('ALGO:Nazaori-IceTea').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                    }
-                    else if(DataRegUser.first_Name.value === 'Korawitzzzzzz'){
-                        db.collection('TeamName').doc('DesertFox').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                      }
-                    else if(DataRegUser.first_Name.value === 'Darmmy'){
-                        db.collection('TeamName').doc('tung jai study').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                    }
-                    else if(DataRegUser.first_Name.value === 'SUGAZ'){
-                        db.collection('TeamName').doc('ฺBig O').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                    }
-                    else if(DataRegUser.first_Name.value === 'Thelastsun'){
-                        db.collection('TeamName').doc('Big C').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                    }
-                    else if(DataRegUser.first_Name.value === 'ririinyourarea'){
-                        db.collection('TeamName').doc('FB').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                    }
-                    else if(DataRegUser.first_Name.value === 'Sayonaraom'){
-                        db.collection('TeamName').doc('ชื่อไรดี').update({
-                            firstKill: DataRegUser.F_nkill.value ,
-                            secondKill: DataRegUser.S_nkill.value
-                        })
-                      }
                 }
             )
       })
@@ -64,13 +61,21 @@ export default function fillOut(){
 
 
     return(
+        
         <ul id="fillOut">
             <li>
                 <form id = 'pushData'>
-                    <span>Rank 1</span>
-                    <input name='first_Name' placeholder="Your name.."></input>
-                    <input name='F_nkill' placeholder="First kill.."></input>
-                    <input name='S_nkill' placeholder="Second kill.."></input>
+                    <span>Rank: {rankCounter}</span>
+                    <input list="playerName" name='playerName'></input>
+                    <datalist id ='playerName' placeholder="Your name..">
+                        {
+                            playerList.map(player => {
+                                return <option>{player}</option>
+                            })
+                        }
+                    </datalist>
+                    <input name='playerKill' placeholder="First kill.."></input>
+                    <input name='restPlayerKill' placeholder="Second kill.."></input>
                     <button onClick ={uploadDataPubg}>Submit</button>
                     </form>
             </li>

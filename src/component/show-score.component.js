@@ -67,7 +67,6 @@ const ShowScore = () => {
     }
     return(
         <div className='showScore'>
-            <button>Show</button>
             <ul id ='team'>
                 <li className='head'>
                     <span>Rank</span>
